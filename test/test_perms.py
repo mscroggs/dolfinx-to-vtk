@@ -82,3 +82,36 @@ def test_tet(degree):
     p = perms.tet(degree)
     assert len(p) == (degree + 1) * (degree + 2) * (degree + 3) // 6
     assert len(set(p)) == len(p)
+
+
+def test_tet_remainders_1():
+    r = perms.tet_remainders(list(range(1)))
+    assert r == [0]
+
+
+def test_tet_remainders_4():
+    r = perms.tet_remainders(list(range(4)))
+    assert r == [0, 1, 2, 3]
+
+
+def test_tet_remainders_10():
+    r = perms.tet_remainders(list(range(10)))
+    assert r == [0, 2, 5, 9, 1, 4, 3, 6, 7, 8]
+
+
+def test_tet_remainders_20():
+    r = perms.tet_remainders(list(range(20)))
+    assert r == [0, 3, 9, 19, 1, 2, 6, 8, 7, 4, 10, 16, 12, 17, 15, 18, 11, 14, 13, 5]
+
+
+def test_tet_remainders_35():
+    r = perms.tet_remainders(list(range(35)))
+    assert r[:34] == [0, 4, 14, 34, 1, 2, 3, 8, 11, 13, 12, 9, 5, 15, 25, 31,
+                      18, 27, 32, 24, 30, 33, 16, 17, 26, 23, 29, 21, 19, 28, 22, 6, 10, 7]
+
+def test_tet_remainders_56():
+    r = perms.tet_remainders(list(range(56)))
+    assert r[:52] == [0, 5, 20, 55, 1, 2, 3, 4, 10, 14, 17, 19, 18, 15, 11, 6,
+                      21, 36, 46, 52, 25, 39, 48, 53, 35, 45, 51, 54,
+                      22, 24, 47, 23, 38, 37, 34, 50, 29, 44, 42, 32,
+                      26, 49, 33, 40, 43, 30, 7, 16, 9, 12, 13, 8]

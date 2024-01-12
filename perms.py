@@ -174,6 +174,8 @@ def tet_remainders(remainders):
             else:
                 remainders = remainders[:dof] + remainders[dof + 1:]
 
+        print(out)
+
         if deg > 2:
             for i in range(deg - 2):
                 out.append(remainders[0])
@@ -183,11 +185,11 @@ def tet_remainders(remainders):
                 out.append(remainders[d])
                 remainders = remainders[:d] + remainders[d + 1:]
                 d += deg - 3 - i
-            d = deg * (deg - 3) // 2
+            d = (deg - 2) * (deg - 1) // 2 - 1
             for i in range(deg - 2):
                 out.append(remainders[d])
                 remainders = remainders[:d] + remainders[d + 1:]
-                d -= deg - 3 - i
+                d -= 2 + i
             d = (deg - 3) * (deg - 2) // 2
             for i in range(deg - 2):
                 out.append(remainders[d])
@@ -204,6 +206,8 @@ def tet_remainders(remainders):
                 remainders = remainders[:d] + remainders[d + 1:]
                 d += (deg - 3 - i) * (deg - 2 - i) // 2 + deg - i - 5
 
+        print(out)
+
         if deg > 3:
             dofs = []
             d = (deg - 3) * (deg - 2) // 2
@@ -211,15 +215,51 @@ def tet_remainders(remainders):
                 for j in range(deg - 3 - i):
                     print(d)
                     dofs.append(remainders[d])
-                    d += 1
-                d += (deg - 2 - i) * (deg - 1 - i) // 2
+                    remainders = remainders[:d] + remainders[d + 1:]
+                d += (deg - 2 - i) * (deg - 1 - i) // 2 - 1
+            out += tri_remainders(dofs)
 
-            print(dofs)
-            remainders += tri_remainders(dofs)
+            dofs = []
+            start = deg ** 2 - 4 * deg + 2
+            sub_i_start = deg - 3
+            for i in range(deg - 3):
+                d = start
+                sub_i = sub_i_start
+                for j in range(deg - 3 - i):
+                    dofs.append(remainders[d])
+                    remainders = remainders[:d] + remainders[d + 1:]
+                    d += sub_i * (sub_i + 1) // 2 - 2 - i
+                    sub_i -= 1
+                start -= 2 + i
+            out += tri_remainders(dofs)
 
-            # TODO
+            dofs = []
+            start = (deg - 3) * (deg - 2) // 2
+            sub_i_start = deg - 3
+            for i in range(deg - 3):
+                d = start
+                sub_i = sub_i_start
+                for j in range(deg - 3 - i):
+                    dofs.append(remainders[d])
+                    remainders = remainders[:d] + remainders[d + 1:]
+                    d += sub_i * (sub_i + 1) // 2 - 1 - 2 * i
+                    sub_i -= 1
+                start += deg - 4 - i
+            out += tri_remainders(dofs)
 
-            print(deg, "r", len(remainders))
-        print()
+            dofs = []
+            add_start = deg - 4
+            for i in range(deg - 3):
+                d = 0
+                add = add_start
+                for j in range(deg - 3 - i):
+                    dofs.append(remainders[d])
+                    remainders = remainders[:d] + remainders[d + 1:]
+                    d += add
+                    add -= 1
+                add_start -= 1
+            out += tri_remainders(dofs)
+
+        print(out)
 
     return out
