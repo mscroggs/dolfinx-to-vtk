@@ -174,8 +174,6 @@ def tet_remainders(remainders):
             else:
                 remainders = remainders[:dof] + remainders[dof + 1:]
 
-        print(out)
-
         if deg > 2:
             for i in range(deg - 2):
                 out.append(remainders[0])
@@ -206,14 +204,11 @@ def tet_remainders(remainders):
                 remainders = remainders[:d] + remainders[d + 1:]
                 d += (deg - 3 - i) * (deg - 2 - i) // 2 + deg - i - 5
 
-        print(out)
-
         if deg > 3:
             dofs = []
             d = (deg - 3) * (deg - 2) // 2
             for i in range(deg - 3):
                 for j in range(deg - 3 - i):
-                    print(d)
                     dofs.append(remainders[d])
                     remainders = remainders[:d] + remainders[d + 1:]
                 d += (deg - 2 - i) * (deg - 1 - i) // 2 - 1
@@ -259,7 +254,5 @@ def tet_remainders(remainders):
                     add -= 1
                 add_start -= 1
             out += tri_remainders(dofs)
-
-        print(out)
 
     return out
