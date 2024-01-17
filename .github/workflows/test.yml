@@ -15,5 +15,6 @@ jobs:
         with:
           python-version: "3.12"
       - uses: actions/checkout@v4
+      - run: python3 -m pip install pytest
       - run: python3 -m pytest test/
         name: Run unit tests
